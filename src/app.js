@@ -51,6 +51,7 @@ app.use('/api/assistant', assistantRoutes);
 app.use('/api/reminders', remindersRoutes);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+
 app.use(errorHandler);
 
 export default app;
