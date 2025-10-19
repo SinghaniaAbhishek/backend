@@ -19,6 +19,7 @@ import badgesRoutes from './routes/badges.routes.js';
 import assistantRoutes from './routes/assistant.routes.js';
 import remindersRoutes from './routes/reminders.routes.js';
 import swaggerUi from 'swagger-ui-express';
+
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const swaggerDoc = require('./swagger.json');

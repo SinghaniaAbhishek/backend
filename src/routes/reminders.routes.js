@@ -19,3 +19,14 @@ router.post('/send-reminders', authMiddleware, async (req, res, next) => {
 });
 
 export default router;
+
+// Public GET endpoint for testing cron
+router.get('/run-cron', async (req, res, next) => {
+  try {
+    await sendReminderEmails();
+    res.json({ success: true, message: 'Cron reminders executed successfully' });
+  } catch (err) {
+    next(err);
+  }
+});
+
