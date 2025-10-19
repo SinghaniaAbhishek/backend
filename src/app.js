@@ -17,6 +17,7 @@ import insightsRoutes from './routes/insights.routes.js';
 import settingsRoutes from './routes/settings.routes.js';
 import badgesRoutes from './routes/badges.routes.js';
 import assistantRoutes from './routes/assistant.routes.js';
+import remindersRoutes from './routes/reminders.routes.js';
 import swaggerUi from 'swagger-ui-express';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -24,12 +25,7 @@ const swaggerDoc = require('./swagger.json');
 
 const app = express();
 
-// Configure CORS from env (supports comma-separated list). Defaults to permissive in non-prod.
-const corsOrigin = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
-  : true;
-app.use(cors({ origin: corsOrigin, credentials: true }));
-app.options('*', cors({ origin: corsOrigin, credentials: true }));
+app.use(cors());
 app.use(express.json());
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
@@ -51,6 +47,7 @@ app.use('/api/insights', insightsRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/badges', badgesRoutes);
 app.use('/api/assistant', assistantRoutes);
+app.use('/api/reminders', remindersRoutes);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.use(errorHandler);
