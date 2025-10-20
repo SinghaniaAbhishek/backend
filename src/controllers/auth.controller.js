@@ -45,9 +45,45 @@ export async function login(req, res, next) {
 export async function me(req, res, next) {
   try {
     const user = await User.findById(req.user.id).select('name email');
-    res.json({ id: user._id, name: user.name, email: user.email });
+    res.json({ 
+      id: user._id, 
+      name: user.name, 
+      email: user.email
+    });
   } catch (e) {
     next(e);
   }
 }
+
+export async function updateProfile(req, res, next) {
+  try {
+    const { income, incomeSource, monthlyBudget } = req.body;
+    const userId = req.user.id;
+
+    // Create income entry
+    if (income && incomeSource) {
+      const { Income } = await import('../models/FinanceModels.js');
+      await Income.create({
+        userId,
+        amount: income,
+        source: incomeSource,
+        date: new Date()
+      });
+    }
+
+    // Update monthly budget in settings
+    if (monthlyBudget) {
+      await Settings.findOneAndUpdate(
+        { userId },
+        { monthlyBudget },
+        { upsert: true }
+      );
+    }
+
+    res.json({ success: true });
+  } catch (e) {
+    next(e);
+  }
+}
+
 
