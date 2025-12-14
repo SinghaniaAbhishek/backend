@@ -64,6 +64,5 @@ Frontend Connection
 
 - Set `REACT_APP_API_URL=http://localhost:5000/api` in frontend `.env`
 - Replace localStorage calls with `fetch`/`axios` to these endpoints
-- Keep a mock mode toggle to switch back to local data
 
 
